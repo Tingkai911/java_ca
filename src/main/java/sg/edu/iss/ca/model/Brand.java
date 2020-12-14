@@ -1,8 +1,6 @@
 package sg.edu.iss.ca.model;
 
 import java.util.List;
-import java.util.ArrayList;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
