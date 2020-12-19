@@ -7,8 +7,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -153,8 +156,9 @@ public class InventoryImplement implements InventoryService {
 		 List<Inventory> mycontent = inventoryRepo.ReorderReport(id);
 	        
 		 Supplier s = supplierSvc.findSupplierById(id);
-		 LocalDateTime date = LocalDateTime.now();
-		 String dateStr = date.toString();
+//		 LocalDateTime date = LocalDateTime.now();
+//		 String dateStr = date.toString();
+		 String date = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		 
 	        // Create a new folder inside the project to store myfile.dat
 			Path currentPath = Paths.get(System.getProperty("user.dir"));
@@ -166,7 +170,7 @@ public class InventoryImplement implements InventoryService {
 	            System.out.println("Directory already exists");
 	        }
 	       // Create myfile.dat inside the report folder inside the project directory
-		 file = new File(Paths.get(filePath.toString(), dateStr +  ".dat").toString());
+		 file = new File(Paths.get(filePath.toString(), date + ".dat").toString());
 		 
 		 if (!file.exists()) {
 		     file.createNewFile();
@@ -178,13 +182,14 @@ public class InventoryImplement implements InventoryService {
 		  bw.write("\n\n----------------------Inventory Reorder Report for the Supplier-----------------------          \n");
 		  bw.write("--------------------------------------------------------------------------------------       \n\n");
 		  bw.write("======================================================================================\n");
-		  bw.write("\tid\t  quantity\t  ReorderLvl\t ReorderQty\t  UnitPrice\t   Price\n\n");
+		  bw.write("\tid\t  quantity\t Product Description\t ReorderLvl\t ReorderQty\t  UnitPrice\t   Price\n\n");
 		  bw.write("======================================================================================\n");
 		  for(Inventory i:mycontent)
 		  {
 		  double price=i.getReorderQty()*i.getWholesalePrice();
 		  total+=price;
-		  bw.write("\t"+i.getId()+"\t\t"+i.getQuantity()+"\t\t\t"+i.getReorderLvl()+"\t\t\t\t"+i.getReorderQty()+"\t\t\t"+i.getWholesalePrice()+"\t\t" +price+"\n\n");   
+		  
+		  bw.write("\t"+i.getId()+"\t\t"+i.getQuantity()+"\t\t\t"+i.getProduct().getDescription()+"\t\t\t"+i.getReorderLvl()+"\t\t\t\t"+i.getReorderQty()+"\t\t\t"+i.getWholesalePrice()+"\t\t" +price+"\n\n");   
 		  }
 		  bw.write("=======================================================================================\n");
 		  bw.write("\t\t\t\t\t\t\t\t\t\t\t\t\t Total:\t\t$"+total);
