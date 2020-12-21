@@ -1,6 +1,7 @@
 package sg.edu.iss.ca.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -9,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import sg.edu.iss.ca.model.Brand;
 import sg.edu.iss.ca.model.Inventory;
@@ -151,4 +155,35 @@ public class InventoryController {
 		model.addAttribute("InventoryList", listInventories);
 		return "InventoryList";
 	}
+	
+	@RequestMapping(value = "/generate/{id}")
+	@ResponseBody
+	public FileSystemResource generateReport(@PathVariable ("id") int id, HttpServletResponse response)
+	{
+		File file = inservice.ReorderReportGenerate(id);
+		FileInputStream inputStream;
+        try {
+            inputStream = new FileInputStream(file);
+            try {
+                int c;
+                while ((c = inputStream.read()) != -1) {
+                response.getWriter().write(c);
+                }
+            } finally {
+                if (inputStream != null)
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    response.getWriter().close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+		return new FileSystemResource(file.toPath());
+//		return "redirect:/supplier/index";
+	}
+	
 }

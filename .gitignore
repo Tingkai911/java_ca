@@ -34,4 +34,8 @@ build/
 
 .env
 
+/report
 backup.zip
+.gradle
+**/.DS_Store
+
