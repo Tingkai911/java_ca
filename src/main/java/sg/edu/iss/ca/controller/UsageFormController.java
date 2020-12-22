@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -84,6 +86,24 @@ public class UsageFormController {
 //		model.addAttribute("cartList", ufservice.listAllItems(ufrepo.findById(id).get()));
 //		return "UsageForm";
 //	}
+	
+	@RequestMapping(value = "/details")
+	public String viewForm(Model model, HttpSession session) {
+		// hard coded formId
+		// need some logic here to check if the current user has created a form
+		// and get the Usage Form id
+//		int id = 1;
+		UsageForm uf = (UsageForm) session.getAttribute("UsageForm");
+		int id = uf.getId();
+		// int id = usageForm.getId();
+
+//		if (ufrepo.existsById(id) == false)
+//			ufservice.createForm();
+		// model.addAttribute("session", session);
+		model.addAttribute("UsageForm", uf);
+		model.addAttribute("cartList", ufservice.listAllItems(ufrepo.findById(id).get()));
+		return "UsageForm";
+	}
 
 	@RequestMapping(value = "/addInventory")
 	public String addInventory(Model model, HttpSession session) {
@@ -113,25 +133,6 @@ public class UsageFormController {
 		return "UsageForm";
 
 	}
-
-	@RequestMapping(value = "/details")
-	public String viewForm(Model model, HttpSession session) {
-		// hard coded formId
-		// need some logic here to check if the current user has created a form
-		// and get the Usage Form id
-//		int id = 1;
-		UsageForm uf = (UsageForm) session.getAttribute("UsageForm");
-		int id = uf.getId();
-		// int id = usageForm.getId();
-
-//		if (ufrepo.existsById(id) == false)
-//			ufservice.createForm();
-		// model.addAttribute("session", session);
-		model.addAttribute("UsageForm", uf);
-		model.addAttribute("cartList", ufservice.listAllItems(ufrepo.findById(id).get()));
-		return "UsageForm";
-	}
-
 	@RequestMapping(value = "/remove/{id}")
 	public String removeItem(@PathVariable("id") int id) {
 		fcservice.deleteCart(fcservice.findFormCartById(id));
@@ -228,6 +229,7 @@ public class UsageFormController {
 //		model.addAttribute("customer", uf.getCustomer());
 		model.addAttribute("UsageForm", uf);
 		model.addAttribute("cartList", fcl);
+		model.addAttribute("date", date);
 
 		session.removeAttribute("UsageForm");
 
@@ -247,8 +249,8 @@ public class UsageFormController {
 		return "redirect:/inventory/list";
 	}
 
-	@RequestMapping(value = "/checkHistory/{id}")
-	public String checkHistory(@PathVariable("id") int iid, Model model) {
+	@RequestMapping(value = "/checkPartHistory/{id}")
+	public String checkPartHistory(@PathVariable("id") int iid, Model model) {
 		Inventory inventory = irepo.findInventoryById(iid);
 		List<FormCart> fcl_draft = fcservice.findFormCartsByInventoryId(iid);
 		List<UsageForm> ufl_draft = ufservice.findUsageFormsByInventoryId(iid);
@@ -279,6 +281,52 @@ public class UsageFormController {
 		return "PartTransHistory";
 	}
 
+	@RequestMapping(value = "/formHistory")
+	public String formHistory(Model model) {
+		List<UsageForm> fc = ufrepo.findAll();
+		model.addAttribute("formList", fc);
+		return "FormHistory";
+	}
+	
+	@RequestMapping(value = "/checkFormHistory/{id}")
+	public String checkFormHistory(@PathVariable("id") int id, Model model) {
+		UsageForm uf = ufrepo.findById(id).get();
+		List<FormCart> fcl = ufservice.listAllItems(uf);
+		// the date a user retrieve the history != creation date
+		// so the "new record create" message will not show
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String date = sdf.format(new Date());
+		
+		model.addAttribute("UsageForm", uf);
+		model.addAttribute("cartList", fcl);
+		model.addAttribute("date", date);
+		return "TransactionSummary";
+	}
+	
+	@GetMapping("/listHistory")
+	public String listHitory(Model model, @Param("keyword") String keyword, HttpSession session) {
+//		List<Inventory> listInventories = inservice.listAllInventories(keyword);
+//		model.addAttribute("InventoryList", listInventories);
+//		model.addAttribute("keyword", keyword);
+		session.setAttribute("searchHis", "true");
+		session.setAttribute("keyword", keyword);
+		return findPaginatedSearch(1, model, session);
+	}
+	
+	@GetMapping("/page/{pageNo}/search")
+	public String findPaginatedSearch(@PathVariable(value = "pageNo") int pageNo, Model model, HttpSession session) {
+		String keyword = (String) session.getAttribute("keyword");
+		int pageSize = 5;
+		Page<UsageForm> page = ufservice.findPaginatedSearch(pageNo, pageSize, keyword);
+		List<UsageForm> listHis = page.getContent();
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("HisList", listHis);
+		return "FormHistory";
+	}
+	
+	
 //	@RequestMapping(value = "/ChangeCartQty")
 //	public String ChangeCartQty(@RequestBody ChangeQtyInput changeQtyInput) {
 //		int id = 1;

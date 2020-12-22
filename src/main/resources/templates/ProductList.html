@@ -68,7 +68,7 @@
 		</tbody>
 	</table>
 	</div>
-	<div th:if="${totalPages >1}">
+	<div th:if="${totalPages >1}" style="padding-left: 40px">
 <div class="row col-sm-10">
 <div class="col-sm-2">
 Total rows:[[${totalItems}]]
@@ -83,14 +83,17 @@ Total rows:[[${totalItems}]]
 </span>
 </div>
 <div class="col-sm-1">
-<a th:if="${currentPage < totalPages and session.search == null}" th:href="@{'/product/page/'+${currentPage+1}}">Next</a>
-<a th:if="${currentPage < totalPages and session.search != null}" th:href="@{'/product/page/'+${currentPage+1}+'/search'}">Next</a>
-<span th:unless="${currentPage < totalPages}">Next</span>
+<a th:if="${currentPage < totalPages and session.search == null}" th:href="@{'/product/page/'+${currentPage+1}}"><button class="btn btn-primary" style="margin-right: 15px">Next</button></a>
+<a th:if="${currentPage < totalPages and session.search != null}" th:href="@{'/product/page/'+${currentPage+1}+'/search'}"><button class="btn btn-primary" style="margin-right: 15px">Next</button></a>
+<span th:unless="${currentPage < totalPages}"><button class="btn btn-primary" style="margin-right: 15px">Next</button></span>
 </div>
 <div class="col-sm-1">
-<a th:if="${currentPage < totalPages and session.search == null}" th:href="@{'/product/page/'+${totalPages}}">Last</a>
-<a th:if="${currentPage < totalPages and session.search != null}" th:href="@{'/product/page/'+${totalPages}+'/search'}">Last</a>
-<span th:unless="${currentPage < totalPages}">Last</span>
+<a th:if="${currentPage < totalPages and session.search == null}" th:href="@{'/product/page/'+${totalPages}}"><button
+						class="btn btn-primary" style="margin-right: 15px">Last</button></a>
+<a th:if="${currentPage < totalPages and session.search != null}" th:href="@{'/product/page/'+${totalPages}+'/search'}"><button
+						class="btn btn-primary" style="margin-right: 15px">Last</button></a>
+<span th:unless="${currentPage < totalPages}"><button
+						class="btn btn-primary" style="margin-right: 15px">Last</button></span>
 </div>
 </div>
 </div>

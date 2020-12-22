@@ -2,6 +2,8 @@ package sg.edu.iss.ca.repo;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,5 +30,15 @@ public interface UsageFormRepository extends JpaRepository<UsageForm, Integer> {
 	
 //	@Query("SELECT uf from UsageForm uf JOIN FormCart fc ")
 //	public List<UsageForm> findUsagebyProductId();
+	
+	@Query("Select uf from UsageForm uf where uf.customer LIKE CONCAT('%',:name,'%')"+" OR uf.description LIKE CONCAT('%',:name,'%')"
+	         +" OR uf.car LIKE CONCAT('%',:name,'%')" + " OR uf.id LIKE CONCAT('%',:name,'%')" + " order by uf.id"
+	 )
+	public List<UsageForm> search(@Param("name") String keyword);
+	
+	@Query("Select uf from UsageForm uf where uf.customer LIKE CONCAT('%',:name,'%')"+" OR uf.description LIKE CONCAT('%',:name,'%')"
+	         +" OR uf.car LIKE CONCAT('%',:name,'%')" + " OR uf.id LIKE CONCAT('%',:name,'%')" + " order by uf.id"
+	 )
+	public Page<UsageForm> searchPageable(@Param("name") String keyword, Pageable pageable);
 	
 }

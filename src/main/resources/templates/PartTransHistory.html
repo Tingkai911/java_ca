@@ -34,7 +34,7 @@ th, td {
 	<p th:if="${#lists.isEmpty(cartList)}"><br>No Transaction History Found</p>
 <hr />
 		<div>
-			<table class="table table-striped">
+			<table class="table table-striped" th:if="${not #lists.isEmpty(cartList)}">
 				<col width="10%">
 				<col width="20%">
 				<col width="20%">
@@ -58,7 +58,7 @@ th, td {
 			</table>
 		</div>
 	
-	<a href="#" th:href="@{/inventory/list}">Go back to inventory list</a>
+	<a href="#" th:href="@{/inventory/list}"><button class="btn btn-primary">Go back to inventory list</button></a>
 	<!-- 	<table> -->
 	<!-- 		<tr> -->
 	<!-- 			<th>Record ID</th> -->
