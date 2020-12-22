@@ -26,10 +26,10 @@ import sg.edu.iss.ca.repo.StaffRepository;
 import sg.edu.iss.ca.repo.SupplierRepository;
 import sg.edu.iss.ca.repo.UsageFormRepository;
 import sg.edu.iss.ca.service.BrandService;
+import sg.edu.iss.ca.service.InventoryImplement;
 import sg.edu.iss.ca.service.ProductService;
 import sg.edu.iss.ca.service.SupplierService;
 import sg.edu.iss.ca.service.UserService;
-import sg.edu.iss.ca.service.InventoryImplement;
 
 @Component
 public class DatabaseSeeder {
@@ -101,34 +101,34 @@ public class DatabaseSeeder {
 	}
 	
 	private void seedProductTable() {		
-		productSvc.createProduct(new Product("1A", "Tire1", "Car Tire", 
+		productSvc.createProduct(new Product("1A", "YokoKama", "YK (Farm-class)", 
 				 "Black", "2x2", 
-				"Car", "Tire", "Premium Car Tire", new Brand("Toyota")));
+				"Car", "Tire", "Premium Car Tire", new Brand("YokoKama")));
 		
-		productSvc.createProduct(new Product("2A", "Tire2", "Car Tire", 
+		productSvc.createProduct(new Product("2A", "Chervoh", "Very good tire", 
 				"Red", "2x2", 
-				"Car", "Tire", "Premium Car Tire", new Brand("Honda")));
+				"Car", "Tire", "Premium Car Tire", new Brand("Chervoh")));
 		
-		productSvc.createProduct(new Product("3A", "Tire3", "Car Tire", 
+		productSvc.createProduct(new Product("3A", "Polymeowphism", "Cat Tire", 
 				"Black", "2x2", 
-				"Car", "Tire", "Premium Car Tire", new Brand("Subaru")));
+				"Car", "Tire", "Premium Car Tire", new Brand("PM")));
 		
 		
 		List<Brand> brands = brandSvc.listAllBrands();
 
-		Product p1 = productSvc.createProduct(new Product("1B", "Tyre1", "Car Tire", 
+		Product p1 = productSvc.createProduct(new Product("1B", "Michelin", "Car Tire", 
 				"Black", "2x2", 
 				"Car", "Tire", "Premium Car Tire"));
 		
-		Product p2 = productSvc.createProduct(new Product("2B", "Tyre2", "Car Tire", 
+		Product p2 = productSvc.createProduct(new Product("2B", "Michelin", "Car Tire", 
 				"Red", "2x2", 
 				"Car", "Tire", "Premium Car Tire"));
 		
-		Product p3 = productSvc.createProduct(new Product("3B", "Tyre3", "Car Tire", 
+		Product p3 = productSvc.createProduct(new Product("3B", "Bridgestone", "Car Tire", 
 				"Black", "2x2", 
 				"Car", "Tire", "Premium Car Tire"));
 		
-		Product p4 = productSvc.createProduct(new Product("3B", "Tyre4", "Car Tire", 
+		Product p4 = productSvc.createProduct(new Product("3B", "Pirelli", "Car Tire", 
 				"Black", "2x2", 
 				"Car", "Tire", "Premium Car Tire"));
 		
@@ -136,12 +136,12 @@ public class DatabaseSeeder {
 				"Transparent", "3x3", "Car Window", "Premium Car Window", 
 				"Window"));
 		
-		Product p6 = productSvc.createProduct(new Product("2B", "ABC Window", "ABC", 
+		Product p6 = productSvc.createProduct(new Product("2B", "Hololive", "ABC", 
 				"Transparent", "3x3", "Car Window", "Premium Car Window", 
 				"Window"));
 		
-		Product p7 = productSvc.createProduct(new Product("3B", "ABC Window", "ABC", 
-				"Transparent", "3x3", "Car Window", "Premium Car Window", 
+		Product p7 = productSvc.createProduct(new Product("3B", "team2chewhuimin", "ABC", 
+				"Opaque", "3x3", "Car Window", "Premium Car Window", 
 				"Window"));
 		
 		p1.setBrand(brands.get(0));
@@ -163,9 +163,9 @@ public class DatabaseSeeder {
 	}
 	
 	private void seedSupplierData() {
-		supplierSvc.createSupplier(new Supplier("tierone@email.com", "tier one"));
-		supplierSvc.createSupplier(new Supplier("tiertwo@email.com", "tier two"));
-		supplierSvc.createSupplier(new Supplier("tierthree@email.com", "tier three"));
+		supplierSvc.createSupplier(new Supplier("e0639657@u.nus.edu", "tier one"));
+		supplierSvc.createSupplier(new Supplier("ericforgotafeature@gmail.com", "tier two"));
+		supplierSvc.createSupplier(new Supplier("hellomynameistom@gmail.com", "tier three"));
 	}
 	
 	private void seedInventoryTable () {
