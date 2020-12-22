@@ -15,16 +15,22 @@
 		<h2>Supplier Form</h2>
 		<br />
 		<form action="" th:object="${supplier}" th:action="@{/supplier/save}" method="POST">
+			<div th:if="${session.suppliernameError}" class="alert alert-danger">
+            	Supplier already exists.
+        	</div>
+        	<div th:if="${session.supplieremailError}" class="alert alert-danger">
+            	Email already exists.
+        	</div>
 			<fieldset class="form-input-container">
 				<input type="hidden" th:field="*{id}" />
 			</fieldset>
 			<fieldset class="form-input-container">
 				<label>Name:</label>
-				<input type="text" th:field="*{name}">
+				<input type="text" th:field="*{name}" required pattern=".*\S+.*" title="This field is required">
 			</fieldset>
 			<fieldset class="form-input-container">
 				<label>Email:</label>
-				<input type="text" th:field="*{email}">
+				<input type="text" th:field="*{email}" required pattern=".*\S+.*" title="This field is required">
 			</fieldset>
 			<br />
 			<fieldset class="button-container">

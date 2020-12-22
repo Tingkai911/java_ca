@@ -15,6 +15,9 @@
 	<h2>Report Damage</h2>
 	<form action="" th:object="${inventory}" th:action="@{/manage/withdraw/save}"
 		method="POST" class="form-horizontal">
+		<div th:if="${session.withdrawError}" class="alert alert-danger">
+            	Damaged quantity cannot exceed stock count.
+        	</div>
 		<fieldset>
 			<input type="hidden" th:field="*{id}" />
 		</fieldset>
@@ -32,7 +35,7 @@
 		</fieldset>
 		<fieldset class="form-input-container">
 			<label>Damaged Qty:</label>
-			<input max="*{quantity}" type="number" th:value="${0}" th:name="quantity" th:id="quantity" >
+			<input max="*{quantity}" type="number" th:value="${0}" th:name="quantity" th:id="quantity" min="0" >
 		</fieldset>
 		<fieldset class="form-input-container">
 			<label>Shelf Location:</label>

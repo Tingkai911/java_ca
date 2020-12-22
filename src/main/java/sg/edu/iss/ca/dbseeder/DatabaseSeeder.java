@@ -121,7 +121,7 @@ public class DatabaseSeeder {
 		
 		List<Brand> brands = brandSvc.listAllBrands();
 
-		Product p1 = productSvc.createProduct(new Product("1B", "Michelin", "Car Tire", 
+		Product p1 = productSvc.createProduct(new Product("1B", "Dunlope", "Car Tire", 
 				"Black", "2x2", 
 				"Car", "Tire", "Premium Car Tire"));
 		

@@ -15,12 +15,15 @@
 		<h2>Brand Form</h2>
 		<br />
 		<form action="" th:object="${brand}" th:action="@{/brand/save}" method="POST">
+		<div th:if="${session.brandnameError}" class="alert alert-danger">
+            	Brand already exists.
+        	</div>
 			<fieldset>
 				<input type="hidden" th:field="*{id}" />
 			</fieldset>
 			<fieldset class="form-input-container">
 				<label>Name:</label>
-				<input type="text" th:field="*{name}">
+				<input type="text" th:field="*{name}" required pattern=".*\S+.*" title="This field is required">
 			</fieldset>
 			<br />
 			<div class="button-container">

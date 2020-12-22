@@ -3,6 +3,7 @@ package sg.edu.iss.ca.controller;
 import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -55,21 +56,34 @@ public class ManageInventoryController {
 	}
 	
 	@GetMapping(value = "/withdraw/{id}")
-	public String withdrawForm(@PathVariable("id") Integer id, Model model) {
+	public String withdrawForm(@PathVariable("id") Integer id, Model model, HttpSession session) {
+		session.removeAttribute("withdrawError");
+		session.removeAttribute("Inventory");
 		Inventory inventory = inventorySvc.findByInventoryId(id);
+		session.setAttribute("Inventory", inventory);
 		model.addAttribute("inventory", inventory);
 		return "WithdrawForm";
 	}
 	
 	@PostMapping(value = "/withdraw/save") 
 	public String withdrawInventory(@ModelAttribute("inventory") @Valid Inventory inventory, 
-			BindingResult bindingResult, Model model, HttpServletRequest httpServletRequest) {
+			BindingResult bindingResult, Model model, HttpServletRequest httpServletRequest
+			, HttpSession session) {
+		
 		if (bindingResult.hasErrors()) {
 			return "WithdrawForm";
 		}
+		session.removeAttribute("withdrawError");
 		
-		inventorySvc.withdrawInventory(inventory, httpServletRequest);
-		
+		String errorExists = inventorySvc.withdrawInventory(inventory, httpServletRequest);
+		if (errorExists != null)
+		{
+			session.setAttribute("withdrawError", "true");
+			Inventory inv = (Inventory)session.getAttribute("Inventory");
+			model.addAttribute("inventory", inv);
+			return "WithdrawForm";
+		}
+		session.removeAttribute("Inventory");
 		return "redirect:/inventory/list";
 	}
 }

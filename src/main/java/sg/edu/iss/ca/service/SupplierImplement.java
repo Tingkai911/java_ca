@@ -67,4 +67,8 @@ public class SupplierImplement implements SupplierService{
 		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
 		return supplierRepo.findAll(pageable);
 	}
+	@Override
+	public Supplier findSupplierByEmail(String email) {
+		return supplierRepo.findSupplierByemail(email);
+	}
 }

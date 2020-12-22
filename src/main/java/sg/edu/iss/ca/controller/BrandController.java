@@ -2,6 +2,7 @@ package sg.edu.iss.ca.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,8 @@ public class BrandController {
 	}
 	
 	@GetMapping("/create")
-	public String createBrand(Model model) {
+	public String createBrand(Model model, HttpSession session) {
+		session.removeAttribute("brandnameError");
 		model.addAttribute("brand", new Brand());
 		return "BrandForm";
 	}
@@ -53,16 +55,26 @@ public class BrandController {
 	
 	@GetMapping("/edit/{id}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public String editBrand(@PathVariable("id") Integer id, Model model) {
+	public String editBrand(@PathVariable("id") Integer id, Model model, HttpSession session) {
+		session.removeAttribute("brandnameError");
 		model.addAttribute("brand", brandServ.findByBrandId(id));
 		return "BrandForm";
 	}
 	
 	@PostMapping("/save")
-	public String saveBrand(@ModelAttribute("brand") @Valid Brand brand, BindingResult bindingResult, Model model) {
+	public String saveBrand(@ModelAttribute("brand") @Valid Brand brand, BindingResult bindingResult, Model model, HttpSession session) {
 		if (bindingResult.hasErrors()) {
 			return "BrandForm";
 		}
+		
+		session.removeAttribute("brandnameError");
+		
+		if(brandServ.findByBrandName(brand.getName()) != null) {
+			session.setAttribute("brandnameError", "true");
+			model.addAttribute("brand", brand);
+			return "BrandForm";
+		}
+		
 		brandServ.createBrand(brand);
 		return "redirect:/brand/index";
 	}

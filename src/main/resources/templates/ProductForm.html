@@ -16,6 +16,9 @@
 	<br />
 	<form action="" th:object="${product}" th:action="@{/product/save}"
 		method="POST" class="form-horizontal">
+		<div th:if="${session.productnameError}" class="alert alert-danger">
+            	Product already exists.
+        	</div>
 			<fieldset>
 				<input type="hidden" th:field="*{id}" />
 			</fieldset>
@@ -25,7 +28,7 @@
 			</fieldset>
 			<fieldset class="form-input-container">
 				<label>Name:</label>
-				<input type="text" th:field="*{name}">
+				<input type="text" th:field="*{name}" required pattern=".*\S+.*" title="This field is required">
 			</fieldset>
 			<fieldset class="form-input-container">
 				<label>Description:</label>
@@ -53,7 +56,7 @@
 			</fieldset>
 	 		<fieldset class="form-input-container">
 	 		<label>Brand:</label>
-				<input list="brands" th:field="*{brandName}">
+				<input list="brands" th:field="*{brandName}" required pattern=".*\S+.*" >
 				<datalist id="brands">
 					<select>
 						<option th:each="b:${brandList}" th:text=${b.name}></option>

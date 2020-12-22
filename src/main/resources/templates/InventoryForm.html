@@ -16,6 +16,9 @@
 	<br />
 	<form action="" th:object="${inventory}" th:action="@{/inventory/save}"
 		method="POST" class="form-horizontal">
+		<div th:if="${session.InvPKError}" class="alert alert-danger">
+            	Inventory log already exists.
+        	</div>
 		<fieldset>
 			<input type="hidden" th:field="*{id}" />
 		</fieldset>

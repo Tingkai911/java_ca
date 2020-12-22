@@ -13,4 +13,5 @@ public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
 	public Supplier findSupplierByName(String name);
 	@Query("Select s from Supplier s where s.name LIKE CONCAT('%',:name,'%')")
 	public List<Supplier> findSupplierByNameLike(@Param("name") String name);
+	public Supplier findSupplierByemail(String email);
 }
