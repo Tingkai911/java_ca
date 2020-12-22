@@ -25,13 +25,13 @@
   <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
   <div class="logout-container">
-  	  <h2>Are your sure you want to logout?</h2>
+  	  <h2>Are you sure you want to logout?</h2>
 	  <br />
 	  <div class="logout-button">
 		<button class="btn btn-primary" onclick="window.history.back()">Go Back</button>
 		<form th:action="@{/logout}" method="post">
     		<button type="submit" value="Logout" class="btn btn-danger" >
-    			<span class="glyphicon glyphicon-log-out"></span> Yes
+    			<span class="glyphicon glyphicon-log-out"></span> Log out
     		</button>
 		</form>
 	  </div>
