@@ -18,7 +18,7 @@ th, td {
 <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
   <div style="padding-left: 50px; padding-right: 50px;">
-	<h2>A new record has been created successfully!</h2>
+	<h2 th:if="${date == UsageForm.creationDate}">A new record has been created successfully!</h2>
 	<p></p>
 	<h3>Summary</h3>
 	<table>
@@ -64,7 +64,9 @@ th, td {
 			
 		
 		
-	<a href="#" th:href="@{/inventory/list}">Go back to inventory list</a>
+	<a href="#" th:href="@{/inventory/list}"><button class="btn btn-primary">Go back to inventory list</button></a>
+	<a href="#" th:href="@{/UsageForm/formHistory}"><button class="btn btn-primary" style="margin-left: 15px">Go back to Form History</button></a>
+	
 </div>
 
 <br/>
