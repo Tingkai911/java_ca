@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,9 @@ public class UserController {
 		}
 	    
 		@RequestMapping(value = "/list")
-		public String list(Model model) {
+		public String list(Model model, HttpSession session) {
+			session.removeAttribute("usernameTaken");
+			session.removeAttribute("emailTaken");
 			return findPaginated(1,model);
 		}
 		@RequestMapping(value = "/add")
@@ -60,8 +63,23 @@ public class UserController {
 		
 		@RequestMapping(value = "/save")
 		public String addStaff(@ModelAttribute("staff") @Valid Staff staff, 
-				BindingResult bindingResult,  Model model) {
+				BindingResult bindingResult,  Model model, HttpSession session) {
 			if (bindingResult.hasErrors()) {
+				return "StaffForm";
+			}
+			
+			session.removeAttribute("usernameTaken");
+			session.removeAttribute("emailTaken");
+			
+			if(uservice.findStaffByUsername(staff.getUserName()) != null) {
+				session.setAttribute("usernameTaken", "true");
+				model.addAttribute("staff", staff);
+				return "StaffForm";
+			}
+			
+			if(uservice.findStaffByEmail(staff.getEmail()) != null) {
+				session.setAttribute("emailTaken", "true");
+				model.addAttribute("staff", staff);
 				return "StaffForm";
 			}
 			

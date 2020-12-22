@@ -12,6 +12,12 @@
   <header th:insert="layout/layout.html :: header"></header>
   <div th:replace="layout/layout.html :: menu" ></div>
   	<div class="form-container">
+ 		<div th:if="${session.usernameTaken}" class="alert alert-danger">
+           	Username is already taken.
+       	</div>
+       	<div th:if="${session.emailTaken}" class="alert alert-danger">
+           	An account with this email already exist.
+       	</div>
 		<h2>Staff Form</h2>
 		<br />
 		<form action="" th:object="${staff}" th:action="@{/staff/save}"
