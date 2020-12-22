@@ -74,29 +74,29 @@ public class InventoryImplement implements InventoryService {
 		return null;
 	}
 
-	@Override
-	@Transactional
-	public List<Inventory> findInventoryByProductName(String name) {
-		return inventoryRepo.findInventoryByProductName(name);
-	}
-
-	@Override
-	@Transactional
-	public List<Inventory> findInventoryByProductNameLike(String name) {
-		return inventoryRepo.findInventoryByProductNameLike(name);
-	}
-
-	@Override
-	@Transactional
-	public List<Inventory> findInventoryBySupplierName(String name) {
-		return inventoryRepo.findInventoryBySupplierName(name);
-	}
-
-	@Override
-	@Transactional
-	public List<Inventory> findInventoryBySupplierNameLike(String name) {
-		return inventoryRepo.findInventoryBySupplierNameLike(name);
-	}
+//	@Override
+//	@Transactional
+//	public List<Inventory> findInventoryByProductName(String name) {
+//		return inventoryRepo.findInventoryByProductName(name);
+//	}
+//
+//	@Override
+//	@Transactional
+//	public List<Inventory> findInventoryByProductNameLike(String name) {
+//		return inventoryRepo.findInventoryByProductNameLike(name);
+//	}
+//
+//	@Override
+//	@Transactional
+//	public List<Inventory> findInventoryBySupplierName(String name) {
+//		return inventoryRepo.findInventoryBySupplierName(name);
+//	}
+//
+//	@Override
+//	@Transactional
+//	public List<Inventory> findInventoryBySupplierNameLike(String name) {
+//		return inventoryRepo.findInventoryBySupplierNameLike(name);
+//	}
 
 	@Override
 	@Transactional
@@ -248,6 +248,27 @@ public class InventoryImplement implements InventoryService {
 			return inventory;
 		}
 		return null;
+	}
+	
+	@Override
+	public List<Inventory> listAllInventories(String keyword) {
+		System.out.println(keyword);
+		if(keyword!=null) {
+		return inventoryRepo.search(keyword.trim());
+		}
+		return inventoryRepo.findAll();
+
+	}
+	
+	@Override
+	public Page<Inventory> findPaginatedSearch(int pageNo, int pageSize, String keyword) {
+		// TODO Auto-generated method stub
+		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
+		System.out.println(keyword);
+		if(keyword!=null) {
+		return inventoryRepo.searchPageable(keyword.trim(), pageable);
+		}
+		return inventoryRepo.findAll(pageable);
 	}
 
 }

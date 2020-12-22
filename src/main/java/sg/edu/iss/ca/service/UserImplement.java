@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sg.edu.iss.ca.model.Product;
-import sg.edu.iss.ca.model.Role;
 import sg.edu.iss.ca.model.Staff;
 
 import sg.edu.iss.ca.repo.StaffRepository;
@@ -55,5 +54,10 @@ public class UserImplement implements UserService{
 	public Page<Staff> findPaginated(int pageNo, int pageSize) {
 		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
 		return staffrepo.findAll(pageable);
+	}
+	
+	@Override
+	public Staff findStaffByEmail(String email) {
+		return staffrepo.findStaffByemail(email);
 	}
 }

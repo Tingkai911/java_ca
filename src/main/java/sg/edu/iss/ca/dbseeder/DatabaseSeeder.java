@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import sg.edu.iss.ca.model.Brand;
 import sg.edu.iss.ca.model.Inventory;
 import sg.edu.iss.ca.model.Product;
-import sg.edu.iss.ca.model.Role;
 import sg.edu.iss.ca.model.Staff;
 import sg.edu.iss.ca.model.Supplier;
 import sg.edu.iss.ca.repo.AdminLogRepository;
@@ -27,10 +26,10 @@ import sg.edu.iss.ca.repo.StaffRepository;
 import sg.edu.iss.ca.repo.SupplierRepository;
 import sg.edu.iss.ca.repo.UsageFormRepository;
 import sg.edu.iss.ca.service.BrandService;
+import sg.edu.iss.ca.service.InventoryImplement;
 import sg.edu.iss.ca.service.ProductService;
 import sg.edu.iss.ca.service.SupplierService;
 import sg.edu.iss.ca.service.UserService;
-import sg.edu.iss.ca.service.InventoryImplement;
 
 @Component
 public class DatabaseSeeder {
@@ -102,48 +101,56 @@ public class DatabaseSeeder {
 	}
 	
 	private void seedProductTable() {		
-		productSvc.createProduct(new Product("1A", "Tire1", "Car Tire", 
-				"Premium Car Tire", "Black", "2x2", 
-				"Car", "Tire", new Brand("Toyota")));
-		productSvc.createProduct(new Product("2A", "Tire2", "Car Tire", 
-				"Premium Car Tire", "Red", "2x2", 
-				"Car", "Tire", new Brand("Honda")));
-		productSvc.createProduct(new Product("3A", "Tire3", "Car Tire", 
-				"Premium Car Tire", "Black", "2x2", 
-				"Car", "Tire", new Brand("Subaru")));
+		productSvc.createProduct(new Product("1A", "YokoKama", "YK (Farm-class)", 
+				 "Black", "2x2", 
+				"Car", "Tire", "Premium Car Tire", new Brand("YokoKama")));
+		
+		productSvc.createProduct(new Product("2A", "Chervoh", "Very good tire", 
+				"Red", "2x2", 
+				"Car", "Tire", "Premium Car Tire", new Brand("Chervoh")));
+		
+		productSvc.createProduct(new Product("3A", "Polymeowphism", "Cat Tire", 
+				"Black", "2x2", 
+				"Car", "Tire", "Premium Car Tire", new Brand("PM")));
 		
 		
 		List<Brand> brands = brandSvc.listAllBrands();
 
-		Product p1 = productSvc.createProduct(new Product("1B", "Tyre1", "Car Tire", 
-				"Premium Car Tire", "Black", "2x2", 
-				"Car", "Tire"));
-		Product p2 = productSvc.createProduct(new Product("2B", "Tyre2", "Car Tire", 
-				"Premium Car Tire", "Red", "2x2", 
-				"Car", "Tire"));
-		Product p3 = productSvc.createProduct(new Product("3B", "Tyre3", "Car Tire", 
-				"Premium Car Tire", "Black", "2x2", 
-				"Car", "Tire"));
-		Product p4 = productSvc.createProduct(new Product("3B", "Tyre4", "Car Tire", 
-				"Premium Car Tire", "Black", "2x2", 
-				"Car", "Tire"));
+		Product p1 = productSvc.createProduct(new Product("1B", "Michelin", "Car Tire", 
+				"Black", "2x2", 
+				"Car", "Tire", "Premium Car Tire"));
+		
+		Product p2 = productSvc.createProduct(new Product("2B", "Michelin", "Car Tire", 
+				"Red", "2x2", 
+				"Car", "Tire", "Premium Car Tire"));
+		
+		Product p3 = productSvc.createProduct(new Product("3B", "Bridgestone", "Car Tire", 
+				"Black", "2x2", 
+				"Car", "Tire", "Premium Car Tire"));
+		
+		Product p4 = productSvc.createProduct(new Product("3B", "Pirelli", "Car Tire", 
+				"Black", "2x2", 
+				"Car", "Tire", "Premium Car Tire"));
+		
 		Product p5 = productSvc.createProduct(new Product("1B", "ABC Window", "ABC", 
 				"Transparent", "3x3", "Car Window", "Premium Car Window", 
 				"Window"));
-		Product p6 = productSvc.createProduct(new Product("2B", "ABC Window", "ABC", 
-				"Transparent", "3x3", "Car Window", "Premium Car Window", 
-				"Window"));
-		Product p7 = productSvc.createProduct(new Product("3B", "ABC Window", "ABC", 
+		
+		Product p6 = productSvc.createProduct(new Product("2B", "Hololive", "ABC", 
 				"Transparent", "3x3", "Car Window", "Premium Car Window", 
 				"Window"));
 		
+		Product p7 = productSvc.createProduct(new Product("3B", "team2chewhuimin", "ABC", 
+				"Opaque", "3x3", "Car Window", "Premium Car Window", 
+				"Window"));
+		
 		p1.setBrand(brands.get(0));
-		p2.setBrand(brands.get(1));
-		p3.setBrand(brands.get(2));	
+		p2.setBrand(brands.get(0));
+		p3.setBrand(brands.get(0));	
 		p4.setBrand(brands.get(0));	
 		p5.setBrand(brands.get(0));
-		p6.setBrand(brands.get(1));
-		p7.setBrand(brands.get(2));	
+		p6.setBrand(brands.get(0));
+		p7.setBrand(brands.get(0));	
 		
 		productSvc.updateProduct(p1);
 		productSvc.updateProduct(p2);
@@ -156,9 +163,9 @@ public class DatabaseSeeder {
 	}
 	
 	private void seedSupplierData() {
-		supplierSvc.createSupplier(new Supplier("tierone@email.com", "tier one"));
-		supplierSvc.createSupplier(new Supplier("tiertwo@email.com", "tier two"));
-		supplierSvc.createSupplier(new Supplier("tierthree@email.com", "tier three"));
+		supplierSvc.createSupplier(new Supplier("e0639657@u.nus.edu", "tier one"));
+		supplierSvc.createSupplier(new Supplier("ericforgotafeature@gmail.com", "tier two"));
+		supplierSvc.createSupplier(new Supplier("hellomynameistom@gmail.com", "tier three"));
 	}
 	
 	private void seedInventoryTable () {
@@ -190,9 +197,9 @@ public class DatabaseSeeder {
 	
 	private void seedStaffTable() {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); 
-		userSvc.addStaff(new Staff("ROLE_ADMIN", "estherfakeemail@nus.edu.sg", "Esther", "est", encoder.encode("123456"), true));
-		userSvc.addStaff(new Staff("ROLE_MECHANIC", "ykfakeemail@nus.edu.sg", "Yuen Kwan", "yk", encoder.encode("polymeowphism"), true));
-		userSvc.addStaff(new Staff("ROLE_MECHANIC", "suriafakeemail@nus.edu.sg", "Suria", "sr", encoder.encode("password"), true));
+		userSvc.addStaff(new Staff("ROLE_ADMIN", "john@email.com", "John Doe", "john", encoder.encode("123456"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "jane@email.com", "Jane Doe", "jane", encoder.encode("123456"), true));
+		userSvc.addStaff(new Staff("ROLE_MECHANIC", "tom@email.com", "Tom Doe", "tom", encoder.encode("password"), true));
 		userSvc.addStaff(new Staff("ROLE_ADMIN", "tingkai911@gmail.com", "Ting Kai", "tk", encoder.encode("password"), true));
 	}
 	
