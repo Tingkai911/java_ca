@@ -2,6 +2,7 @@ package sg.edu.iss.ca.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,9 @@ public class SupplierController {
 	}
 	
 	@GetMapping("/create")
-	public String createSupplier(Model model) {
+	public String createSupplier(Model model, HttpSession session) {
+		session.removeAttribute("suppliernameError");
+		session.removeAttribute("supplieremailError");
 		model.addAttribute("supplier", new Supplier());
 		return "SupplierForm";
 	}
@@ -49,17 +52,35 @@ public class SupplierController {
 	}
 	
 	@GetMapping("/edit/{id}")
-	public String editSupplier(@PathVariable("id") Integer id, Model model) {
+	public String editSupplier(@PathVariable("id") Integer id, Model model, HttpSession session) {
+		session.removeAttribute("suppliernameError");
+		session.removeAttribute("supplieremailError");
 		model.addAttribute("supplier", supplierSvc.findSupplierById(id));
 		return "SupplierForm";
 	}
 	
 	@PostMapping("/save")
 	public String saveBrand(@ModelAttribute("brand") @Valid Supplier supplier, 
-			BindingResult bindingResult, Model model) {
+			BindingResult bindingResult, Model model, HttpSession session) {
 		if (bindingResult.hasErrors()) {
 			return "SupplierForm";
 		}
+		
+		session.removeAttribute("suppliernameError");
+		session.removeAttribute("supplieremailError");
+		
+		if(supplierSvc.findBySupplierName(supplier.getName()) != null) {
+			session.setAttribute("suppliernameError", "true");
+			model.addAttribute("supplier", supplier);
+			return "SupplierForm";
+		}
+		
+		if(supplierSvc.findSupplierByEmail(supplier.getEmail()) != null) {
+			session.setAttribute("supplieremailError", "true");
+			model.addAttribute("supplier", supplier);
+			return "SupplierForm";
+		}
+		
 		supplierSvc.createSupplier(supplier);
 		return "redirect:/supplier/index";
 	}

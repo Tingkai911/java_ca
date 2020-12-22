@@ -125,7 +125,7 @@ public class InventoryImplement implements InventoryService {
 	
 	@Override
 	@Transactional
-	public void withdrawInventory(Inventory inventory, HttpServletRequest httpServletRequest) {
+	public String withdrawInventory(Inventory inventory, HttpServletRequest httpServletRequest) {
 		Inventory i = this.findByInventoryId(inventory.getId());
 		if(i != null && i.getQuantity() >= inventory.getQuantity()) {
 			i.setQuantity(i.getQuantity() - inventory.getQuantity());
@@ -142,6 +142,11 @@ public class InventoryImplement implements InventoryService {
 			
 			AdminLog a = new AdminLog(s, i, inventory.getQuantity(), "Damaged", LocalDate.now());
 			adminSvc.createAdminLog(a);	
+			return null;
+		}
+		else
+		{
+			return "error";
 		}
 	}
 	@Override

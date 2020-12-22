@@ -120,7 +120,7 @@ public class DatabaseSeeder {
 				"Black", "2x2", 
 				"Car", "Tire", "Premium Car Tire"));
 		
-		Product p2 = productSvc.createProduct(new Product("2B", "Michelin", "Car Tire", 
+		Product p2 = productSvc.createProduct(new Product("2B", "Michelin2", "Car Tire", 
 				"Red", "2x2", 
 				"Car", "Tire", "Premium Car Tire"));
 		

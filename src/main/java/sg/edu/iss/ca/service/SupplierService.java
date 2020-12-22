@@ -17,4 +17,5 @@ public interface SupplierService {
 	public List<Supplier> findSupplierByNameLike(String name);
 	public Supplier findBySupplierName(String name);
 	public Page<Supplier> findPaginated(int pageNo,int pageSize);
+	public Supplier findSupplierByEmail(String email);
 }

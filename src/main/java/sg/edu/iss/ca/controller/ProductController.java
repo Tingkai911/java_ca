@@ -52,30 +52,41 @@ public class ProductController {
 		return findPaginated(1,model, session);
 	}
 	@RequestMapping(value = "/add")
-	public String addForm(Model model) {
+	public String addForm(Model model, HttpSession session) {
+		session.removeAttribute("productnameError");
 		model.addAttribute("product", new Product());
 		
 		model.addAttribute("brandList", (ArrayList<Brand>)brandSvc.listAllBrands());
 		return "ProductForm";
 	}
 	@RequestMapping(value = "/edit/{id}")
-	public String editForm(@PathVariable("id") Integer id, Model model) {
+	public String editForm(@PathVariable("id") Integer id, Model model, HttpSession session) {
 		Product p = pservice.findProductById(id);
 		
 		if(p.getBrand() != null)
 			p.setBrandName(p.getBrand().getName());
 		
+		session.removeAttribute("productnameError");
 		model.addAttribute("product", p);
 		model.addAttribute("brandList", (ArrayList<Brand>)brandSvc.listAllBrands());
 		return "ProductForm";
 	}
 	@RequestMapping(value = "/save")
 	public String addProduct(@ModelAttribute("product") @Valid Product product, 
-			BindingResult bindingResult,  Model model) {
+			BindingResult bindingResult,  Model model, HttpSession session) {
 		if (bindingResult.hasErrors()) {
 			return "ProductForm";
 		}
-				
+		
+		session.removeAttribute("productnameError");
+		
+		if(pservice.findByProductName(product.getName()) != null) {
+			session.setAttribute("productnameError", "true");
+			model.addAttribute("product", product);
+			return "ProductForm";
+		}
+
+		
 		// Find if the name of the brand is in the database
 		Brand b = brandSvc.findByBrandName(product.getBrandName());
 		if(b != null)

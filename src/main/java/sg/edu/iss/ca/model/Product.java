@@ -3,6 +3,7 @@ package sg.edu.iss.ca.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,8 @@ public class Product {
     @GenericGenerator(name = "native", strategy = "native")
 	private int id;
 	private String partNumber;
+	
+	@Column(unique=true)
 	private String name;
 	private String description;
 	private String color;

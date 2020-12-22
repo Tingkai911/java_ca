@@ -65,7 +65,8 @@ public class InventoryController {
 	}
 
 	@RequestMapping(value = "/add")
-	public String addForm(Model model) {
+	public String addForm(Model model, HttpSession session) {
+		session.removeAttribute("InvPKError");
 		model.addAttribute("inventory", new Inventory());
 		model.addAttribute("productList", (ArrayList<Product>) pservice.listAllProducts());
 		model.addAttribute("supplierList", (ArrayList<Supplier>) sservice.listAllSuppliers());
@@ -73,7 +74,8 @@ public class InventoryController {
 	}
 
 	@RequestMapping(value = "/edit/{id}")
-	public String editForm(@PathVariable("id") Integer id, Model model) {
+	public String editForm(@PathVariable("id") Integer id, Model model, HttpSession session) {
+		session.removeAttribute("InvPKError");
 		Inventory i = inservice.findByInventoryId(id);
 
 		if (i.getProduct() != null)
@@ -90,7 +92,8 @@ public class InventoryController {
 
 	@RequestMapping(value = "/save")
 	public String addInventory(@ModelAttribute("inventory") @Valid Inventory inventory, BindingResult bindingResult,
-			Model model) {
+			Model model, HttpSession session) {
+		session.removeAttribute("InvPKError");
 		if (bindingResult.hasErrors()) {
 			return "InventoryForm";
 		}
@@ -101,6 +104,21 @@ public class InventoryController {
 
 		if (inventory.getSupplierName() == null || inventory.getSupplierName().trim().length() == 0) {
 			return "InventoryForm";
+		}
+		
+		session.removeAttribute("InvPKError");
+		
+		List<Inventory> inventories = inservice.listAllInventories();
+		for (Inventory i : inventories)
+		{
+			//System.out.println(i.getProduct().getName());
+			if (i.getProduct().getName().equals(inventory.getProductName()) 
+					&& i.getSupplier().getName().equals(inventory.getSupplierName()))
+			{
+				session.setAttribute("InvPKError", "true");
+				model.addAttribute("inventory", inventory);
+				return "InventoryForm";
+			}
 		}
 
 		// Find if the name of the brand is in the database

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sg.edu.iss.ca.model.Product;
+import sg.edu.iss.ca.model.Staff;
 import sg.edu.iss.ca.model.Supplier;
 import sg.edu.iss.ca.repo.SupplierRepository;
 
@@ -66,5 +67,10 @@ public class SupplierImplement implements SupplierService{
 	public Page<Supplier> findPaginated(int pageNo, int pageSize) {
 		Pageable pageable= PageRequest.of(pageNo-1, pageSize);
 		return supplierRepo.findAll(pageable);
+	}
+	
+	@Override
+	public Supplier findSupplierByEmail(String email) {
+		return supplierRepo.findSupplierByemail(email);
 	}
 }

@@ -3,6 +3,7 @@ package sg.edu.iss.ca.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,7 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
 	private int id;
+	@Column(unique=true)
 	private String name;
 
 	@OneToMany(mappedBy = "brand", cascade = {CascadeType.REMOVE})
