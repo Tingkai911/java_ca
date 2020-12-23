@@ -11,7 +11,7 @@ th, td {
 	text-align: center;
 }
 </style>
-<title>Form History</title>
+<title>Transaction History</title>
 </head>
 <body>
 	<div style="padding-bottom: 80px;">
@@ -27,7 +27,7 @@ th, td {
 			</form>
 		</div>
 		<div style="padding-left: 50px; padding-right: 50px;">
-			<h2 th:if="${not #lists.isEmpty(formList)}">Form History</h2>
+			<h2 th:if="${not #lists.isEmpty(formList)}">Transaction History</h2>
 			<br />
 			<h4 th:if="${#lists.isEmpty(formList)}">No Record found in the
 				system</h4>

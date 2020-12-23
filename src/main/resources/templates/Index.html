@@ -19,7 +19,7 @@
 	  
 	  
 	  <p sec:authorize="hasRole('MECHANIC')">Role: Mechanic</p>
-	  <p><h1 style="color: white;">End my suffering</h1></p>
+	  <p><h1 style="color: white;">Congrats you found the Easter Egg</h1></p>
   </div>
   
       
@@ -43,6 +43,7 @@
                           <a href="#" style="width:100%; margin: 10px; flex:1;" class="btn btn-primary btn-lg" role="button" th:href="@{/supplier/create}"><span class="glyphicon glyphicon-plane"></span> <br/>Add Supplier</a>
                           <a href="#" style="width:100%; margin: 10px; flex:1;" class="btn btn-primary btn-lg" role="button" th:href="@{/inventory/add}"><span class="glyphicon glyphicon-list-alt"></span> <br/>Add Invent Log</a>
                           <a href="#" style="width:100%; margin: 10px; flex:1;" class="btn btn-warning btn-lg" role="button" th:href="@{/staff/add}"><span class="glyphicon glyphicon-user"></span> <br/>Add Staff</a>
+                          <a href="#" style="width:100%; margin: 10px; flex:1;" class="btn btn-warning btn-lg" role="button" th:href="@{/FormHistory/listHistory}"><span class="glyphicon glyphicon-time"></span> <br/>Transact History</a>
                         </div>
                     </div>
                 </div>

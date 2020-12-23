@@ -20,7 +20,7 @@
       <li><a href="#" th:href="@{/supplier/index}">Suppliers</a></li>
       <li><a href="#" th:href="@{/inventory/list}">Product Inventory</a></li>
       <li><a href="#" th:href="@{/staff/list}" sec:authorize="hasRole('ADMIN')" >Staff</a></li>
-      <li><a href="#" th:href="@{/UsageForm/formHistory}">Form History</a></li>
+      <li><a href="#" th:href="@{/UsageForm/formHistory}">Transaction History</a></li>
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
@@ -44,7 +44,7 @@
 		<br/>
 		 <small style="color: white;">Now is: <b
 			th:text="${execInfo.now.time}"></b></small> <br /> 
-			<small style="color: white;">(c) ISS, NUS 2020 <small style="color:black;">I hate Thymeleaf movement</small></small>
+			<small style="color: white;">(c) ISS, NUS 2020, Team 2</small>
 </footer>
 
 </body>

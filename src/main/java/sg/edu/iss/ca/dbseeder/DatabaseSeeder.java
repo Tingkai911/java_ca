@@ -205,7 +205,7 @@ public class DatabaseSeeder {
 		userSvc.addStaff(new Staff("ROLE_ADMIN", "john@email.com", "John Doe", "john", encoder.encode("123456"), true));
 		userSvc.addStaff(new Staff("ROLE_MECHANIC", "jane@email.com", "Jane Doe", "jane", encoder.encode("123456"), true));
 		userSvc.addStaff(new Staff("ROLE_MECHANIC", "tom@email.com", "Tom Doe", "tom", encoder.encode("password"), true));
-		userSvc.addStaff(new Staff("ROLE_ADMIN", "tingkai911@gmail.com", "Ting Kai", "tk", encoder.encode("password"), true));
+		userSvc.addStaff(new Staff("ROLE_ADMIN", "fakeemail@email.com", "Ting Kai", "tk", encoder.encode("password"), true));
 	}
 	
 	private void seedUsageFormHistory() throws ParseException {

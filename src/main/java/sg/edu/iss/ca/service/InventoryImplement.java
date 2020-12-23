@@ -227,6 +227,10 @@ public class InventoryImplement implements InventoryService {
 			bw.write(StringUtils.center("=", L, ch2));
 			bw.write("\n");
 			bw.write(StringUtils.rightPad(totalDisplay, L, ch3));
+			bw.write("\n");
+			bw.write("Report generated on (datetime):");
+			bw.write("\n");
+			bw.write(date);
 		    } catch (IOException ioe) {
 		    	ioe.printStackTrace();
 		    }
