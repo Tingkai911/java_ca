@@ -24,7 +24,7 @@ public class LoginController
     	if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
     		return "login";
     	}
-        return "index";
+        return "redirect:/home";
     }
     
     @GetMapping("/logout")
@@ -32,12 +32,12 @@ public class LoginController
     	return "CustomLogout";
     }
     
-    @GetMapping("/")
+    @GetMapping("/home")
     public String homePage() {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
     		return "redirect:/login";
     	}
-    	return "index";
+    	return "Index";
     }
 }
