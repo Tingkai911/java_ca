@@ -31,4 +31,13 @@ public class LoginController
     public String viewLogoutPage() {
     	return "CustomLogout";
     }
+    
+    @GetMapping("/")
+    public String homePage() {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+    		return "redirect:/login";
+    	}
+    	return "index";
+    }
 }
