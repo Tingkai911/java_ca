@@ -18,6 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController 
 {
+    @GetMapping("/")
+    public String indexPage() {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+    		return "redirect:/login";
+    	}
+    	return "redirect:/home";
+    }
+    
     @GetMapping("/login")
     public String viewLoginPage() {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -40,4 +49,5 @@ public class LoginController
     	}
     	return "Index";
     }
+    
 }
