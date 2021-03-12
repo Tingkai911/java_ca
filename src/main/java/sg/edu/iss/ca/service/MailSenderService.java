@@ -18,53 +18,53 @@ import javax.mail.internet.MimeMessage;
 @Service
 public class MailSenderService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+//    @Autowired
+//    private JavaMailSender mailSender;
 
     // Use it to send Simple text emails
     public void sendSimpleMail(SimpleMail mail) {
 
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setTo(mail.getTo());
-        message.setSubject(mail.getSubject());
-        message.setText(mail.getContent());
-
-        mailSender.send(message);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//
+//        message.setTo(mail.getTo());
+//        message.setSubject(mail.getSubject());
+//        message.setText(mail.getContent());
+//
+//        mailSender.send(message);
     }
 
     // Use it to send HTML emails
     public void sendHTMLMail(HTMLMail mail) throws MessagingException {
 
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
-
-        helper.setTo(mail.getTo());
-        helper.setSubject(mail.getSubject());
-        message.setContent(mail.getContent(), "text/html");
-
-        mailSender.send(message);
+//        MimeMessage message = mailSender.createMimeMessage();
+//        MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
+//
+//        helper.setTo(mail.getTo());
+//        helper.setSubject(mail.getSubject());
+//        message.setContent(mail.getContent(), "text/html");
+//
+//        mailSender.send(message);
     }
     
     public void sendAccountMail(AccountMail mail, String username, String password) {
 
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setTo(mail.getTo());
-        message.setSubject(mail.getSubject());
-        message.setText(mail.getContent(username, password));
-
-        mailSender.send(message);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//
+//        message.setTo(mail.getTo());
+//        message.setSubject(mail.getSubject());
+//        message.setText(mail.getContent(username, password));
+//
+//        mailSender.send(message);
     }
     
     public void sendRestockMail(RestockMail mail, String productName, String supplierName) {
 
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setTo(mail.getTo());
-        message.setSubject(mail.getSubject());
-        message.setText(mail.getContent(productName, supplierName));
-
-        mailSender.send(message);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//
+//        message.setTo(mail.getTo());
+//        message.setSubject(mail.getSubject());
+//        message.setText(mail.getContent(productName, supplierName));
+//
+//        mailSender.send(message);
     }
 }
